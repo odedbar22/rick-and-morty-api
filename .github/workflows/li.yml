@@ -17,7 +17,8 @@ jobs:
     # 2. Set up Kubeconfig (from GitHub secret)
     - name: Set up Kubeconfig
       run: |
-        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+        mkdir -p $HOME/.kube  # יצירת תיקיית .kube אם היא לא קיימת
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config  # הוספת ה-Kubeconfig
 
     # 3. Install Helm
     - name: Install Helm
