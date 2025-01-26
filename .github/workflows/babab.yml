@@ -41,5 +41,6 @@
 
          - name: Test Application
            run: |
-             sleep 60  # Wait for pods to be ready
+             sleep 20  # Wait for pods to be ready
+             minikube kubectl get pods
              curl -X GET http://rick-and-morty.local/healthcheck
