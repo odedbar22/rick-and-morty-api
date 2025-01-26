@@ -41,5 +41,6 @@
 
          - name: Test Application
            run: |
-             sleep 20  # Wait for pods to be ready
-             curl -X GET http://<external-ip>/healthcheck
+             kubectl port-forward svc/rick-and-morty-api 5000:80 &
+             sleep 10  # Allow time for port forwarding to establish
+             curl -X GET http://localhost:8080/healthcheck
