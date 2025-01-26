@@ -41,4 +41,4 @@
          - name: Test Application
            run: |
              sleep 30  # Wait for pods to be ready
-             curl -X GET http://rick-and-morty.local/healthcheck
+             curl -X GET http://localhost/healthcheck
