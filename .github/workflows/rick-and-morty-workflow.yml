@@ -1,4 +1,4 @@
-name: Deploy Rick and Morty API
+   name: Deploy Rick and Morty API
 
    on:
      push:
