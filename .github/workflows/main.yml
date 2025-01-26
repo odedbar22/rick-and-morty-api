@@ -1,10 +1,7 @@
-name: Deploy and Test Rick and Morty API
+name: Deploy Rick and Morty API
 
 on:
   push:
-    branches:
-      - main
-  pull_request:
     branches:
       - main
 
@@ -13,48 +10,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Checkout repository
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
+    # 2. Set up Kubeconfig (from GitHub secret)
     - name: Set up Kubeconfig
       run: |
-        mkdir -p $HOME/.kube
-        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
-   
-    - name: Set up Kubeconfig
-      uses: azure/setup-kubeconfig@v1
-      with:
-        kubeconfig: ${{ secrets.KUBECONFIG }}
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
-        
-    - name: Set up Helm
-      uses: azure/setup-helm@v1
-
-    - name: Create namespace if not exists
+    # 3. Install Helm
+    - name: Install Helm
       run: |
-        kubectl create namespace default || echo "Namespace default already exists"
+        curl https://get.helm.sh/helm-v3.8.2-linux-amd64.tar.gz -o helm.tar.gz
+        tar -zxvf helm.tar.gz
+        sudo mv linux-amd64/helm /usr/local/bin/helm
 
+    # 4. Deploy using Helm
     - name: Deploy with Helm
       run: |
-        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default
+        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default --create-namespace
 
-    - name: Wait for Pods to be ready
+    # 5. Wait for pods to be ready
+    - name: Wait for pods to be ready
       run: |
-        kubectl rollout status deployment/rick-and-morty-api --timeout=600s
+        kubectl wait --for=condition=ready pod -l app=rick-and-morty-api --timeout=300s
 
-    - name: Test the API - Healthcheck
+    # 6. Test the healthcheck endpoint
+    - name: Test Healthcheck Endpoint
       run: |
         curl -X GET http://rick-and-morty.local/healthcheck
-
-    - name: Test the API - Human Characters
-      run: |
-        curl -X GET http://rick-and-morty.local/characters/human
-
-    - name: Test the API - Alive Characters
-      run: |
-        curl -X GET http://rick-and-morty.local/characters/alive
-
-    - name: Test the API - Earth Characters
-      run: |
-        curl -X GET http://rick-and-morty.local/characters/earth
-        
