@@ -89,8 +89,10 @@ helm uninstall rick-and-morty-api
 - **GET `/characters/earth`**: Returns a list of characters from Earth.
 
 
-**## GitHub Actions Workflow
-**
+
+
+
+8. ## GitHub Actions Workflow
 
 This repository contains a GitHub Actions workflow to test and deploy the Rick and Morty API.
 
@@ -102,4 +104,5 @@ This repository contains a GitHub Actions workflow to test and deploy the Rick a
 4. Run tests on the deployed application.
 
 To trigger the workflow, push changes to the `main` branch.
+
 
