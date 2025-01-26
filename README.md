@@ -26,7 +26,7 @@
     - `Service.yaml`
     - `Ingress.yaml`
 
-4. **Deploy to Kubernetes**:
+4. ##Deploy to Kubernetes:
     Apply the manifests to your Kubernetes cluster:
     ```bash
     kubectl apply -f yamls/Deployment.yaml
@@ -87,6 +87,7 @@ helm uninstall rick-and-morty-api
 - **GET `/characters/human`**: Returns a list of characters of species "Human".
 - **GET `/characters/alive`**: Returns a list of characters with status "Alive".
 - **GET `/characters/earth`**: Returns a list of characters from Earth.
+
 
 ## GitHub Actions Workflow
 
