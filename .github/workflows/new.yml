@@ -42,6 +42,7 @@ jobs:
     - name: Test the API - Alive Characters
       run: |
         curl -X GET http://rick-and-morty.local/characters/alive
+        
 
     - name: Test the API - Earth Characters
       run: |
