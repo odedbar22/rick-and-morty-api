@@ -14,11 +14,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    # 2. Set up Kubeconfig for Kubernetes connection
+    # 2. Set up Kubeconfig (from GitHub secret)
     - name: Set up Kubeconfig
-      uses: azure/setup-kubeconfig@v1
-      with:
-        kubeconfig: ${{ secrets.KUBECONFIG }}
+      run: |
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
 
     # 3. Install Helm
     - name: Install Helm
