@@ -1,2 +1,90 @@
-# rick-and-morty-api
-rick-and-morty-api - devops finel project
+# Rick and Morty API Deployment on Kubernetes
+
+## Prerequisites
+
+- Kubernetes cluster (Minikube or Kind)
+- kubectl configured
+- Docker image for `rick-and-morty-api` built and available
+
+## Setup
+
+1. **Build the Docker image** for your Flask application:
+    ```bash
+    docker build -t rick-and-morty-api .
+    ```
+
+2. **Push the Docker image** to your container registry (if using a cloud registry):
+    ```bash
+    docker push rick-and-morty-api:latest
+    ```
+
+    Or, if you're using Minikube or Kind, make sure your image is loaded into the local Docker daemon.
+
+3. **Create the `yamls` directory**:
+    Create the folder `yamls` and add the following manifests:
+    - `Deployment.yaml`
+    - `Service.yaml`
+    - `Ingress.yaml`
+
+4. **Deploy to Kubernetes**:
+    Apply the manifests to your Kubernetes cluster:
+    ```bash
+    kubectl apply -f yamls/Deployment.yaml
+    kubectl apply -f yamls/Service.yaml
+    kubectl apply -f yamls/Ingress.yaml
+    ```
+
+5. **Access the application**:
+    - If you're using **Minikube**, you can use the following command to access the Ingress:
+      ```bash
+      minikube tunnel
+      ```
+
+    - If you're using **Kind**, ensure you set up an Ingress controller and access the application through the service IP.
+
+    After deploying and exposing your application, you should be able to access the following endpoints:
+    - `/healthcheck`: Health check endpoint for checking if the app is running.
+    - `/characters/human`: Returns characters of species "Human".
+    - `/characters/alive`: Returns characters with status "Alive".
+    - `/characters/earth`: Returns characters from "Earth".
+
+6. **Test the application**:
+    You can test the endpoints using `curl` or Postman.
+
+    Example with `curl`:
+    ```bash
+    curl http://rick-and-morty.local/healthcheck
+    curl http://rick-and-morty.local/characters/human
+    curl http://rick-and-morty.local/characters/alive
+    curl http://rick-and-morty.local/characters/earth
+    ```
+7.  Rick and Morty API Helm Chart
+
+## Helm Chart Installation
+
+To install the chart:
+
+```bash
+helm install rick-and-morty-api ./helm/rick-and-morty-api
+
+---
+## To uninstall the chart:
+
+```bash
+helm uninstall rick-and-morty-api
+
+
+## Troubleshooting
+
+- **Ingress not working**: Ensure you have an ingress controller running in your cluster (e.g., NGINX ingress controller).
+- **Minikube issues**: Ensure `minikube tunnel` is running if you're using Minikube for local development.
+
+---
+
+## Endpoints
+
+- **GET `/healthcheck`**: Returns the status of the application.
+- **GET `/characters/human`**: Returns a list of characters of species "Human".
+- **GET `/characters/alive`**: Returns a list of characters with status "Alive".
+- **GET `/characters/earth`**: Returns a list of characters from Earth.
+
