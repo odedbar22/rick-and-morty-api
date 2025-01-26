@@ -20,24 +20,28 @@ jobs:
         mkdir -p $HOME/.kube  # יצירת תיקיית .kube אם היא לא קיימת
         echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config  # הוספת ה-Kubeconfig
 
-    # 3. Install Helm
+    # 3. Set Kubernetes Server if necessary
+    - name: Set KUBERNETES_SERVER environment variable
+      run: echo "KUBERNETES_SERVER=https://your-cluster-server-url" >> $GITHUB_ENV
+
+    # 4. Install Helm
     - name: Install Helm
       run: |
         curl https://get.helm.sh/helm-v3.8.2-linux-amd64.tar.gz -o helm.tar.gz
         tar -zxvf helm.tar.gz
         sudo mv linux-amd64/helm /usr/local/bin/helm
 
-    # 4. Deploy using Helm
+    # 5. Deploy using Helm
     - name: Deploy with Helm
       run: |
-        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default --create-namespace
+        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default
 
-    # 5. Wait for pods to be ready
+    # 6. Wait for pods to be ready
     - name: Wait for pods to be ready
       run: |
         kubectl wait --for=condition=ready pod -l app=rick-and-morty-api --timeout=300s
 
-    # 6. Test the healthcheck endpoint
+    # 7. Test the healthcheck endpoint
     - name: Test Healthcheck Endpoint
       run: |
         curl -X GET http://rick-and-morty.local/healthcheck
