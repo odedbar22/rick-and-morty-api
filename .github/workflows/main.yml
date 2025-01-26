@@ -28,9 +28,13 @@ jobs:
     - name: Set up Helm
       uses: azure/setup-helm@v1
 
-    - name: Install dependencies (Helm chart)
+    - name: Create namespace if not exists
       run: |
-        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default --create-namespace
+        kubectl create namespace default || echo "Namespace default already exists"
+
+    - name: Deploy with Helm
+      run: |
+        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default
 
     - name: Wait for Pods to be ready
       run: |
