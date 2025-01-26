@@ -1,0 +1,48 @@
+name: Deploy and Test Rick and Morty API
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Kubeconfig
+      run: |
+        echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+
+    - name: Set up Helm
+      uses: azure/setup-helm@v1
+
+    - name: Install dependencies (Helm chart)
+      run: |
+        helm upgrade --install rick-and-morty-api ./helm/rick-and-morty-api --namespace default --create-namespace
+
+    - name: Wait for Pods to be ready
+      run: |
+        kubectl rollout status deployment/rick-and-morty-api --timeout=600s
+
+    - name: Test the API - Healthcheck
+      run: |
+        curl -X GET http://rick-and-morty.local/healthcheck
+
+    - name: Test the API - Human Characters
+      run: |
+        curl -X GET http://rick-and-morty.local/characters/human
+
+    - name: Test the API - Alive Characters
+      run: |
+        curl -X GET http://rick-and-morty.local/characters/alive
+
+    - name: Test the API - Earth Characters
+      run: |
+        curl -X GET http://rick-and-morty.local/characters/earth
