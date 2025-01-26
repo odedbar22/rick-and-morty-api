@@ -6,8 +6,10 @@
          - main
 
    jobs:
-     deploy:
-       runs-on: ubuntu-latest
+   build:
+    runs-on: [self-hosted, oded1] 
+    deploy:
+         runs-on: ubuntu-latest
 
        steps:
          - name: Checkout code
