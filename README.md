@@ -92,7 +92,9 @@ helm uninstall rick-and-morty-api
 
 
 
-8. ## GitHub Actions Workflow
+8.
+
+##GitHub Actions Workflow
 
 This repository contains a GitHub Actions workflow to test and deploy the Rick and Morty API.
 
