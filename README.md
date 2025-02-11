@@ -73,12 +73,6 @@ helm install rick-and-morty-api ./helm/rick-and-morty-api
 ```bash
 helm uninstall rick-and-morty-api
 
-
-## Troubleshooting
-
-- **Ingress not working**: Ensure you have an ingress controller running in your cluster (e.g., NGINX ingress controller).
-- **Minikube issues**: Ensure `minikube tunnel` is running if you're using Minikube for local development.
-
 ---
 
 ## Endpoints
@@ -92,10 +86,8 @@ helm uninstall rick-and-morty-api
 
 
 
-8.
-
-##GitHub Actions Workflow
-
+**8. ## GitHub Actions Workflow
+**
 This repository contains a GitHub Actions workflow to test and deploy the Rick and Morty API.
 
 ### Workflow Steps:
