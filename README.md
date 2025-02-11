@@ -88,7 +88,7 @@ helm uninstall rick-and-morty-api
 - **GET `/characters/alive`**: Returns a list of characters with status "Alive".
 - **GET `/characters/earth`**: Returns a list of characters from Earth.
 
-
+---
 
 
 
