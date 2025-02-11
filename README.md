@@ -81,13 +81,11 @@ helm uninstall rick-and-morty-api
 - **GET `/characters/human`**: Returns a list of characters of species "Human".
 - **GET `/characters/alive`**: Returns a list of characters with status "Alive".
 - **GET `/characters/earth`**: Returns a list of characters from Earth.
-
+```
 ---
 
+8. ## GitHub Actions Workflow
 
-
-**8. ## GitHub Actions Workflow
-**
 This repository contains a GitHub Actions workflow to test and deploy the Rick and Morty API.
 
 ### Workflow Steps:
