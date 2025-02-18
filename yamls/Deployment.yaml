@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: rick-and-morty-api
-          image: rick-and-morty-api:latest  # ודא שהתמונה קיימת
+          image: rick-and-morty-api:latest 
           ports:
             - containerPort: 5000
           imagePullPolicy: IfNotPresent
