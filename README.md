@@ -1,4 +1,4 @@
-# Rick and Morty API Deployment on Kubernetes
+# Rick and Morty API APP
 
 ## Prerequisites
 
