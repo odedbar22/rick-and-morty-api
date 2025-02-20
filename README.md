@@ -1,4 +1,4 @@
-# Rick and Morty API APP
+# Rick and Morty API 
 
 ## Prerequisites
 
