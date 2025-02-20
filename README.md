@@ -1,5 +1,8 @@
 # Rick and Morty API 
 
+This Flask application provides an API that fetches and filters characters from the Rick and Morty API based on specific criteria. It includes endpoints to retrieve human characters, alive characters, and characters associated with Earth, processing multiple pages of data. Additionally, it has a health check endpoint and runs on port 5000 in debug mode.
+
+
 ## Prerequisites
 
 - Kubernetes cluster (Minikube or Kind)
